@@ -54,7 +54,7 @@ class ArticleCommentServiceTest {
     void givenArticleCommentInfo_whenSavingComment_thenSaveComment() {
         // given
         ArticleCommentDto dto = createArticleCommentDto("댓글");
-        given(articleRepository.getReferenceById(dto.articleId())).willReturn(createdArticle());
+        given(articleRepository.getReferenceById(dto.articleId())).willReturn(createArticle());
         given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
         // when
         sut.saveArticleComment(dto);

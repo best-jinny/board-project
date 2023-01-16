@@ -33,9 +33,10 @@ public record ArticleWithCommentsDto(
         return new ArticleWithCommentsDto(
                 entity.getId(),
                 UserAccountDto.from(entity.getUserAccount()),
+                // 댓글 리스트 포함
                 entity.getArticleComments().stream()
                         .map(ArticleCommentDto::from)
-                        .collect(Collectors.toCollection(LinkedHashSet::new)),
+                        .collect(Collectors.toCollection(LinkedHashSet::new)), // LinkedHashSet : 순서보장
                 entity.getTitle(),
                 entity.getContent(),
                 entity.getHashtag(),

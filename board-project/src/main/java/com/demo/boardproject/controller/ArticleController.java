@@ -45,10 +45,11 @@ public class ArticleController {
     }
 
     @GetMapping("/{articleId}")
-    public String articles(@PathVariable Long articleId, ModelMap map) {
+    public String article(@PathVariable Long articleId, ModelMap map) {
         ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
         map.addAttribute("article", article);
         map.addAttribute("articleComments", article.articleCommentsResponse());
+        map.addAttribute("totalCount", articleService.getArticleCount());
         return "articles/detail";
     }
 
@@ -81,7 +82,7 @@ public class ArticleController {
     public String postNewArticle(ArticleRequest articleRequest) {
         // TODO: 인증 정보를 넣어줘야 한다.
         articleService.saveArticle(articleRequest.toDto(UserAccountDto.of(
-                "test", "test1234", "jinny@mail.com", "Jinny", "memo"
+                "test", "test1234", "jinny@mail.com", null, null
         )));
 
         return "redirect:/articles";

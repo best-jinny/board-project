@@ -13,14 +13,14 @@ import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource
+@RepositoryRestResource // 내부적으로 REST API 생성
 public interface ArticleRepository extends JpaRepository<Article, Long>,
                                            ArticleRepositoryCustom,
                                            QuerydslPredicateExecutor<Article>,
                                            QuerydslBinderCustomizer<QArticle> {
     Page<Article> findByTitleContaining(String title, Pageable pageable);
     Page<Article> findByContentContaining(String content, Pageable pageable);
-    Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
+    Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable); // UserAccount 필드에 접근하려면 언더바 사용
     Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
     Page<Article> findByHashtag(String hashtag, Pageable pageable);
 

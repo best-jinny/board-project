@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @ToString
-@EntityListeners(AuditingEntityListener.class)
-@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class) // @EntityListeners: 엔티티를 DB에 적용하기 전후에 커스텀 콜백을 요청 할 수 있음. 인자로 넘긴 클래스를 통해 Auditing 기능 수행
+@MappedSuperclass // 공통 매핑 정보가 필요할 때 사용(해당 클래스를 상속받는 엔티티에서 해당 클래스의 필드를 컬럼으로 인식)
 public class AuditingFields {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

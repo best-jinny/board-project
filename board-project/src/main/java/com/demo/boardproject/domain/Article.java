@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@ToString(callSuper = true)
+@ToString(callSuper = true) // 상속 받은 클래스의 정보까지 출력
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
@@ -25,7 +25,7 @@ public class Article extends AuditingFields {
 
     @Setter
     @JoinColumn(name = "userId")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false) // `UserAccount` 없는 `Article`은 없다." 라는 제약 조건. Inner join 수행 가능
     private UserAccount userAccount; // 유저 정보(ID)
 
     @Setter @Column(nullable = false) private String title;
@@ -34,8 +34,8 @@ public class Article extends AuditingFields {
     @Setter private String hashtag;
 
     @OrderBy("createdAt DESC")
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    @ToString.Exclude
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL) // 연관 관계의 주인(FK를 가짐) : articleComments // cascade: 영속성 전이(Article 삭제되면 articleComments도 삭제)
+    @ToString.Exclude // 양방향 참조의 경우 toString() 을 호출하면서 무한 루프에 빠질 수 있음
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
     protected Article() {}
